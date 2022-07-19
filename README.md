@@ -10,13 +10,17 @@ Currently supports three (mandatory) flags:
 
 # Building
 ## macOS
-``` brew install libpng libjpeg libtiff cimg  ```
-``` make ```
+``` 
+brew install libpng libjpeg libtiff cimg
+make 
+```
 
 ## Linux
-``` sudo apt update && sudo apt upgrade ```
-``` sudo apt install build-essentials zlib1g-dev libpng-dev libjpeg-dev libtiff-dev cimg-dev ```
-``` g++ -o imageresizer main.cpp -lpng -ljpeg -ltiff -lz ```
+``` 
+sudo apt update && sudo apt upgrade 
+sudo apt install build-essentials zlib1g-dev libpng-dev libjpeg-dev libtiff-dev cimg-dev 
+g++ -o imageresizer main.cpp -lpng -ljpeg -ltiff -lz 
+```
 
 ## Windows
 Support is coming soon
