@@ -4,6 +4,7 @@ A simple C++ program to resize image files. Supports PNG, JPEG and TIFF file for
 # How to use
 Currently supports three (mandatory) flags:
 | Flag | Description |
+|------|-------------|
 | -f | Directory of the file you want to resize |
 | -w | New image width |
 | -h | New image height |
