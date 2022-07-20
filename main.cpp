@@ -5,6 +5,7 @@
 //  Created by Archer Gardiner-Sheridan on 18/7/2022.
 //
 
+#include <filesystem>
 #include <iostream>
 #include <sstream>
 
@@ -16,78 +17,86 @@
 #include "CImg.h"
 
 using namespace cimg_library;
+using namespace std;
 
 bool USING_DIRECTORY = false;
 int FILE_COUNT = 0;
-std::string SINGLE_FILENAME = "";
+
+void resize_operation(string path, int width, int height) {
+  int size = path.length();
+  char filename_array[size + 1];
+  strcpy(filename_array, path.c_str());
+  CImg<unsigned char> image(filename_array);
+
+  image.resize(width, height);
+  image.save(filename_array);
+}
 
 int main(int argc, const char* argv[]) {
   int width = -1;
   int height = -1;
+  string single_filename = "";
+  string directory = "";
 
-  std::cout << "Welcome to Image Resizer\n";
+  cout << "Welcome to Image Resizer\n";
 
   // get program args
   for (int i = 1; i < argc; i++) {
-    std::string arg = argv[i];
+    string arg = argv[i];
 
     if (arg == "-d") {
       if (argv[i + 1] != NULL) {
-        std::string directory = argv[i + 1];
-        std::cout << "Operating on directory: " + directory << std::endl;
+        directory = argv[i + 1];
+        cout << "Operating on directory: " + directory << endl;
         USING_DIRECTORY = true;
       }
     } else if (arg == "-f") {
       if (argv[i + 1] != NULL) {
-        std::string filename = argv[i + 1];
+        string filename = argv[i + 1];
         USING_DIRECTORY = false;
         FILE_COUNT = 1;
-        SINGLE_FILENAME = filename;
+        single_filename = filename;
       }
     }
 
     if (arg == "-w") {
       if (argv[i + 1] != NULL) {
-        std::stringstream sWidth(argv[i + 1]);
+        stringstream sWidth(argv[i + 1]);
 
         sWidth >> width;
-        std::cout << "Applying width: " + std::to_string(width) << std::endl;
+        cout << "Applying width: " + to_string(width) << endl;
       }
     }
 
     if (arg == "-h") {
       if (argv[i + 1] != NULL) {
-        std::stringstream sHeight(argv[i + 1]);
+        stringstream sHeight(argv[i + 1]);
         sHeight >> height;
-        std::cout << "Applying height: " + std::to_string(height) << std::endl;
+        cout << "Applying height: " + to_string(height) << endl;
       }
     }
   }
 
   if (height <= -1 || width <= -1 ||
-      (SINGLE_FILENAME == "" && USING_DIRECTORY == false)) {
-    std::cout << "Invalid arguments" << std::endl;
+      (single_filename == "" && USING_DIRECTORY == false)) {
+    cout << "Invalid arguments" << endl;
     return 0;
   }
 
   if (USING_DIRECTORY) {
     // get all files from directory
-    for (int i = 0; i < FILE_COUNT; i++) {
+    for (const auto& entry : filesystem::directory_iterator(directory)) {
+      string filepath = entry.path();
+      cout << "Operating on file: " << filepath << endl;
+      resize_operation(filepath, width, height);
     }
 
-    std::cout << "Directory operation completed" << std::endl;
+    cout << "Directory operation completed" << endl;
 
   } else {
-    std::cout << "Operating on file: " + SINGLE_FILENAME << std::endl;
-
-    int size = SINGLE_FILENAME.length();
-    char filename_array[size + 1];
-    strcpy(filename_array, SINGLE_FILENAME.c_str());
-    CImg<unsigned char> image(filename_array);
-
-    image.resize(width, height);
-    image.save(filename_array);
-    std::cout << "File operation completed" << std::endl;
+    cout << "Operating on file: " + single_filename << endl;
+    resize_operation(single_filename, width, height);
+    cout << "File operation completed" << endl;
   }
 
   return 0;

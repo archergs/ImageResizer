@@ -2,12 +2,13 @@
 A simple C++ program to resize image files. Supports PNG, JPEG and TIFF file formats. 
 
 # How to use
-Currently supports three (mandatory) flags:
+Currently supports four flags:
 | Flag | Description |
 |------|-------------|
-| -f | Directory of the file you want to resize |
-| -w | New image width |
-| -h | New image height |
+| -f | Path of the file you want to resize. Either this or ``` -d ``` are required. |
+| -d | Directory containing files you want to resize. Will resize all files in the directory. Either this or ``` -f ``` are required. |
+| -w | New image width. This is a required flag. |
+| -h | New image height. This is a required flag. |
 
 # Building
 ## macOS
@@ -28,4 +29,4 @@ Support is coming soon
 
 # To-do
 - [ ] Support Linux and Windows in the Makefile
-- [ ] Implement "-d" flag for changing the size of a directory of image files
+- [x] Implement "-d" flag for changing the size of a directory of image files
