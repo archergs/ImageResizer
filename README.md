@@ -10,6 +10,8 @@ Currently supports four flags:
 | -w | New image width. This is a required flag. |
 | -h | New image height. This is a required flag. |
 
+Example: ``` ./imageresizer -f image.png -w 400 -h 300 ```
+
 # Building
 ## macOS
 ``` 
